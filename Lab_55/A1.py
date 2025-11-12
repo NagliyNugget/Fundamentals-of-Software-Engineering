@@ -1,0 +1,5 @@
+text = str(input())
+position1 = text.rfind('(')
+position2 = text.rfind(')')
+text = text.replace(text[position1:position2], '')
+print(text)

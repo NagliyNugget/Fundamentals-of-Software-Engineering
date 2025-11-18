@@ -19,3 +19,21 @@ for i, protein in enumerate(proteins, 1):
     print(f" Название: {name}")
     print(f" Организм: {organism}")
     print(f" Аминокислоты: {sequence}")
+
+def decode_proteins(encoded_sequence):
+    decoded_proteins = ""
+    i = 0
+    n = len(encoded_sequence)
+
+    while i < n:
+        if encoded_sequence[i].isdigit():
+            count = int(encoded_sequence[i])
+            amino_acid = encoded_sequence[i + 1]
+            decoded_proteins += amino_acid * count
+            i+=2
+        else:
+            decoded_proteins += encoded_sequence[i]
+            i+=1
+    return decoded_proteins
+
+print(decode_proteins('8ATA3TCGC4TC5ATTGTCAGATGAGAG6AT4A'))

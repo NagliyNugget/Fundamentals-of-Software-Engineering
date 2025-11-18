@@ -12,4 +12,10 @@ def read_protein_data(filename):
         proteins.append(protein_data)
     return proteins
 
-print(read_protein_data('sequences.0.txt'))
+proteins=read_protein_data('sequences.0.txt')
+for i, protein in enumerate(proteins, 1):
+    name, organism, sequence = protein
+    print(f"Белок {i}:")
+    print(f" Название: {name}")
+    print(f" Организм: {organism}")
+    print(f" Аминокислоты: {sequence}")

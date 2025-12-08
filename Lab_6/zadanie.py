@@ -19,21 +19,49 @@ def load_users_data():
         print("Файл не найден")
         return []
 
-def load_workouts_data():
+def  load_workouts_data():
     try:
         workouts_tree = ET.parse('workouts.xml')
         workouts = []
         for workout_elem in workouts_tree.getroot().findall('workout'):
             workout = {
                 'workout_id': int(workout_elem.find('workout_id').text),
-                'name': workout_elem.find('name').text,
-                'age': int(workout_elem.find('age').text),
-                'weight': int(workout_elem.find('weight').text),
-                'fitness_level': workout_elem.find('fitness_level').text,
-                'workouts': []
+                'user_id' : int(workout_elem.find('user_id').text),
+                'date': workout_elem.find('date').text,
+                'type': workout_elem.find('type').text,
+                'duration': int(workout_elem.find('duration').text),
+                'distance': float(workout_elem.find('distance').text),
+                'calories': int(workout_elem.find('calories').text),
+                'avg_heart_rate': int(workout_elem.find('avg_heart_rate').text),
+                'intensity': workout_elem.find('intensity').text
             }
             workouts.append(workout)
         return workouts
     except FileNotFoundError:
         print("Файл не найден")
         return []
+
+def get_stats(users, workouts):
+    count_workouts = 0
+    count_users = 0
+    total_calories = 0
+    total_time = 0
+    total_distance = 0
+    for workout in workouts:
+        count_workouts += 1
+    for user in users:
+        count_users += 1
+    total_calories = sum(workout['calories'] for workout in workouts)
+    total_time = sum(workout['duration'] for workout in workouts) / 60
+    total_distance = sum(workout['distance'] for workout in workouts)
+    print('ОБЩАЯ СТАТИСТИКА')
+    print('===========================')
+    print(f'Всего тренировок: {count_workouts}')
+    print(f'Всего пользователей: {count_users}')
+    print(f'Сожжено калорий: {total_calories}')
+    print(f'Общее время: {total_time:.1f} часов')
+    print(f'Пройдено дистанции: {total_distance} км')
+
+all_users = load_users_data()
+all_workouts = load_workouts_data()
+get_stats(all_users, all_workouts)
